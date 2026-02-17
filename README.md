@@ -2,6 +2,17 @@
 
 **Evaluation & Calibration Core** evaluates decision pipelines via the shared `decision-schema` contract. It replays scenarios, computes metrics, produces reports, and optionally calibrates policy thresholds.
 
+## Domain-Agnostic Guarantee
+
+Evaluation & Calibration Core is designed to work across **any domain** that uses `decision-schema`:
+
+- ✅ **No domain-specific logic**: Metrics and invariants are generic
+- ✅ **Contract-first**: Only depends on `decision-schema` types
+- ✅ **Generic metrics**: Action distribution, guard trigger rates, latency stats
+- ✅ **Domain-agnostic invariants**: Contract closure, confidence clamp, fail-closed
+- ✅ **Flexible fixtures**: Test suites work for any decision pipeline
+- ✅ **Optional calibration**: Grid-search over generic policy parameters
+
 ## Purpose
 
 This core provides:
@@ -11,15 +22,44 @@ This core provides:
 - **Invariant checks**: Mathematical guarantee checks (contract closure, confidence clamp, fail-closed)
 - **Optional calibration**: Safe grid-search over policy thresholds
 
+## Use Cases
+
+Evaluation & Calibration Core enables evaluation in various domains:
+
+### 1. Content Moderation Pipeline Evaluation
+- **Input**: PacketV2 traces from moderation runs
+- **Metrics**: Action distribution (moderate/flag/approve), guard trigger rates (rate limits, cooldowns)
+- **Invariants**: Confidence clamp, fail-closed (guards deny unsafe actions)
+
+### 2. Robotics Control System Evaluation
+- **Input**: PacketV2 traces from robot control runs
+- **Metrics**: Action distribution (move/stop/rotate), guard trigger rates (battery limits, collision avoidance)
+- **Invariants**: Safety guards trigger on low battery, high collision risk
+
+### 3. API Rate Limiting Evaluation
+- **Input**: PacketV2 traces from API request processing
+- **Metrics**: Action distribution (allow/throttle/deny), guard trigger rates (rate limits, quota limits)
+- **Invariants**: Rate limits enforced, quota limits respected
+
+### 4. Resource Allocation Evaluation
+- **Input**: PacketV2 traces from resource allocation runs
+- **Metrics**: Action distribution (allocate/reject), guard trigger rates (capacity limits, cooldowns)
+- **Invariants**: Capacity limits enforced, cooldowns respected
+
+### 5. Trading/Financial Markets (Optional)
+- **Input**: PacketV2 traces from trading runs
+- **Metrics**: Action distribution, guard trigger rates (exposure limits, drawdown limits)
+- **Invariants**: Risk guards trigger on exposure/drawdown thresholds
+
 ## Installation
 
 ```bash
-pip install evaluation-calibration-core
+pip install -e .
 ```
 
-Or from source:
+Or from git:
 ```bash
-pip install -e .
+pip install git+https://github.com/MeetlyTR/evaluation-calibration-core.git
 ```
 
 ## Quick Start
@@ -95,8 +135,8 @@ Mathematical guarantee checks:
 ## Documentation
 
 - `docs/ARCHITECTURE.md`: System architecture
-- `docs/METRICS_AND_FORMULAS.md`: Metric definitions and formulas
-- `docs/INVARIANTS.md`: Invariant specifications
+- `docs/FORMULAS.md`: Metric definitions and formulas
+- `docs/INTEGRATION_GUIDE.md`: Integration examples
 - `docs/PUBLIC_RELEASE_GUIDE.md`: Public release checklist
 
 ## License
