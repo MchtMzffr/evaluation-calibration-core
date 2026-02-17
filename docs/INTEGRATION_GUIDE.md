@@ -4,15 +4,16 @@
 
 Pin schema version:
 ```toml
-dependencies = ["decision-schema>=0.1,<0.2"]
+dependencies = ["decision-schema>=0.2,<0.3"]
 ```
 
 ## Basic Usage
 
 ```python
+from pathlib import Path
 from eval_calibration_core.io.packet_reader import PacketReader
 from eval_calibration_core.metrics.compute import compute_metrics
-from eval_calibration_core.report import build_report
+from eval_calibration_core.report import build_report, write_report
 
 # Read packets from JSONL file
 reader = PacketReader("traces.jsonl")
@@ -24,12 +25,11 @@ metrics = compute_metrics(packets)
 print(f"Action distribution: {metrics['action_distribution']}")
 print(f"Guard trigger rates: {metrics['guard_trigger_rates']}")
 print(f"Latency percentiles: {metrics['latency_percentiles']}")
-print(f"Invariant pass rate: {metrics['invariant_pass_rate']}")
+print(f"Safety invariant pass rate: {metrics['safety_invariant_pass_rate']}")
 
-# Generate report
-report = build_report(packets)
-report.save_json("report.json")
-report.save_markdown("report.md")
+# Build and write report
+report = build_report(packets, suite_name="my_suite")
+write_report(report, Path("output"))
 ```
 
 ## Reading PacketV2 Traces
@@ -58,34 +58,32 @@ metrics = compute_metrics(packets)
 action_dist = metrics["action_distribution"]
 guard_rates = metrics["guard_trigger_rates"]
 latency_p50 = metrics["latency_percentiles"]["p50"]
-inv_pass_rate = metrics["invariant_pass_rate"]
+safety_pass_rate = metrics["safety_invariant_pass_rate"]
 ```
 
 ## Generating Reports
 
 ```python
-from eval_calibration_core.report import build_report
+from pathlib import Path
+from eval_calibration_core.report import build_report, write_report
 
-report = build_report(packets)
+report = build_report(packets, suite_name="my_suite")
 
-# Save as JSON
-report.save_json("report.json")
-
-# Save as Markdown
-report.save_markdown("report.md")
+# Write JSON and Markdown to directory
+write_report(report, Path("output"))  # creates output/report.json, output/report.md
 
 # Access report data
-print(f"Total packets: {report.total_packets}")
 print(f"Metrics: {report.metrics}")
-print(f"Invariant checks: {report.invariant_checks}")
+print(f"Invariant results: {report.invariant_results}")
+print(f"Contract check: {report.contract_matrix_check}")
 ```
 
 ## Invariant Verification
 
 ```python
-from eval_calibration_core.invariants import verify_invariants
+from eval_calibration_core.suites.invariants import check_invariants
 
-results = verify_invariants(packets)
+results = check_invariants(packets)
 
 for invariant_name, passed in results.items():
     if not passed:

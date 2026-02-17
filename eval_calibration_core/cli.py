@@ -62,7 +62,7 @@ def _run_evaluation(args: argparse.Namespace) -> None:
     invariant_results = check_invariants(packets)
 
     # Check contract matrix compatibility
-    contract_ok, contract_details = check_expected_minor_range(expected_major=0, min_minor=1, max_minor=1)
+    contract_ok, contract_details = check_expected_minor_range(expected_major=0, min_minor=2, max_minor=2)
 
     # Create report
     report = Report(
