@@ -102,18 +102,21 @@ class MetricDefinitions:
     @staticmethod
     def latency_percentiles(packets: list[Any]) -> dict[str, float]:
         """
-        Compute latency percentiles.
+        Compute latency percentiles using nearest-rank method.
         
-        Formula:
-            p50 = median(latency_ms)
-            p95 = 95th percentile
-            p99 = 99th percentile
+        Formula (nearest-rank):
+            p_k = value at index = floor((k/100) * n)
+            For k=95, n=100: index = 95 (0-indexed: 94)
+        
+        Method: Nearest-rank (deterministic, simple)
+        - Alternative: Linear interpolation (smoother but more complex)
+        - For small n, p95 and p99 may equal max value (expected behavior)
         
         Args:
             packets: List of PacketV2 packets
         
         Returns:
-            Dict with p50, p95, p99 keys
+            Dict with p50, p95, p99 keys (milliseconds)
         """
         latencies = [p.latency_ms for p in packets if hasattr(p, "latency_ms")]
         if not latencies:
@@ -123,6 +126,7 @@ class MetricDefinitions:
         n = len(sorted_latencies)
 
         def percentile(p: float) -> float:
+            """Nearest-rank percentile: index = floor((p/100) * n)."""
             idx = int((p / 100.0) * n)
             return sorted_latencies[min(idx, n - 1)]
 
