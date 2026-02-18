@@ -37,4 +37,5 @@ def build_report(
         metrics=metrics,
         invariant_results=invariant_results,
         contract_matrix_check=contract_details,
+        contract_ok=contract_ok,
     )

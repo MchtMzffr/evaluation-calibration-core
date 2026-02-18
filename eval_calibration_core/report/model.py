@@ -18,6 +18,7 @@ class Report:
     invariant_results: dict[str, bool] = field(default_factory=dict)
     calibration_summary: dict[str, Any] | None = None
     contract_matrix_check: dict[str, Any] | None = None
+    contract_ok: bool | None = None  # INV-EVAL-CTR-1: single source for contract check result
 
     def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary."""
@@ -34,4 +35,6 @@ class Report:
         }
         if self.contract_matrix_check is not None:
             result["contract_matrix_check"] = self.contract_matrix_check
+        if self.contract_ok is not None:
+            result["contract_ok"] = self.contract_ok
         return result
