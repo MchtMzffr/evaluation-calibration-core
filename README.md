@@ -17,9 +17,10 @@ Domain-agnostic; depends only on `decision-schema`.
 ## Integration
 
 ```python
+from pathlib import Path
 from eval_calibration_core.io.packet_reader import PacketReader
 from eval_calibration_core.metrics.compute import compute_metrics
-from eval_calibration_core.report import build_report
+from eval_calibration_core.report import build_report, write_report
 
 # Read packets
 reader = PacketReader("traces.jsonl")
@@ -28,10 +29,9 @@ packets = list(reader.read())
 # Compute metrics
 metrics = compute_metrics(packets)
 
-# Generate report
-report = build_report(packets)
-report.save_json("report.json")
-report.save_markdown("report.md")
+# Build and write report
+report = build_report(packets, suite_name="my_suite")
+write_report(report, Path("output"))
 ```
 
 ## Documentation
@@ -48,7 +48,7 @@ pip install -e .
 
 Or from git:
 ```bash
-pip install git+https://github.com/MeetlyTR/evaluation-calibration-core.git
+pip install git+https://github.com/MchtMzffr/evaluation-calibration-core.git
 ```
 
 ## Tests
