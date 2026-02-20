@@ -13,10 +13,10 @@ from eval_calibration_core.metrics.definitions import MetricDefinitions
 def compute_metrics(packets: list[PacketV2]) -> dict[str, Any]:
     """
     Compute all metrics from packets.
-    
+
     Args:
         packets: List of PacketV2 packets
-    
+
     Returns:
         Dict containing all computed metrics
     """

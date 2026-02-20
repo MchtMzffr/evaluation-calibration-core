@@ -15,7 +15,7 @@ class PacketReader:
     def __init__(self, path: Path | str):
         """
         Initialize reader.
-        
+
         Args:
             path: Path to JSONL file containing PacketV2 dicts
         """
@@ -26,10 +26,10 @@ class PacketReader:
     def read(self) -> Iterator[PacketV2]:
         """
         Read packets from JSONL file.
-        
+
         Yields:
             PacketV2 instances
-        
+
         Raises:
             ValueError: If packet format is invalid
         """
@@ -50,7 +50,7 @@ class PacketReader:
     def read_all(self) -> list[PacketV2]:
         """
         Read all packets into a list.
-        
+
         Returns:
             List of PacketV2 instances
         """

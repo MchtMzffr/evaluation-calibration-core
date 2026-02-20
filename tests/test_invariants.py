@@ -4,19 +4,20 @@
 """Tests for invariant checks."""
 
 from decision_schema.packet_v2 import PacketV2
-from decision_schema.types import Action
 
 from eval_calibration_core.metrics.compute import compute_metrics
 from eval_calibration_core.suites.invariants import check_invariants
 
 # INVARIANT 5: canonical metric output keys (must match docs and compute.py)
-EXPECTED_METRIC_KEYS = frozenset({
-    "action_distribution",
-    "guard_trigger_rates",
-    "safety_invariant_pass_rate",
-    "latency_percentiles",
-    "total_steps",
-})
+EXPECTED_METRIC_KEYS = frozenset(
+    {
+        "action_distribution",
+        "guard_trigger_rates",
+        "safety_invariant_pass_rate",
+        "latency_percentiles",
+        "total_steps",
+    }
+)
 
 
 def test_invariant_contract_closure() -> None:
@@ -173,6 +174,7 @@ def test_invariant_5_metric_key_set() -> None:
     assert set(empty_metrics.keys()) == EXPECTED_METRIC_KEYS
 
     from eval_calibration_core.io.fixtures import load_fixture_suite
+
     packets = load_fixture_suite("smoke")
     non_empty_metrics = compute_metrics(packets)
     assert set(non_empty_metrics.keys()) == EXPECTED_METRIC_KEYS

@@ -2,6 +2,7 @@
 # Copyright (c) 2026 Mücahit Muzaffer Karafil (MchtMzffr)
 # SPDX-License-Identifier: MIT
 """CI-0: Workflow file hygiene — CR=0, LF>=10, no control/embedding Unicode, on:/jobs: line-addressable."""
+
 import re
 from pathlib import Path
 

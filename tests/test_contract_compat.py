@@ -3,8 +3,6 @@
 # SPDX-License-Identifier: MIT
 """Contract compatibility tests."""
 
-import pytest
-
 from eval_calibration_core.contracts import check_schema_compatibility, get_schema_version
 
 

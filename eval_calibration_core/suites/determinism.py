@@ -13,10 +13,10 @@ class DeterminismSuite:
     def generate(seed: int = 42) -> list[PacketV2]:
         """
         Generate determinism test packets.
-        
+
         Args:
             seed: Random seed
-        
+
         Returns:
             List of PacketV2 packets
         """

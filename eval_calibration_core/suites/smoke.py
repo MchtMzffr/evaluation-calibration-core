@@ -3,8 +3,6 @@
 # SPDX-License-Identifier: MIT
 """Smoke test suite."""
 
-from typing import Any
-
 from decision_schema.packet_v2 import PacketV2
 
 
@@ -15,10 +13,10 @@ class SmokeSuite:
     def generate(seed: int = 42) -> list[PacketV2]:
         """
         Generate smoke test packets.
-        
+
         Args:
             seed: Random seed (for determinism)
-        
+
         Returns:
             List of PacketV2 packets
         """

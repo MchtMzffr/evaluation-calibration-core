@@ -6,13 +6,15 @@
 from eval_calibration_core.io.fixtures import load_fixture_suite
 from eval_calibration_core.report import build_report
 
-EXPECTED_METRIC_KEYS = frozenset({
-    "action_distribution",
-    "guard_trigger_rates",
-    "safety_invariant_pass_rate",
-    "latency_percentiles",
-    "total_steps",
-})
+EXPECTED_METRIC_KEYS = frozenset(
+    {
+        "action_distribution",
+        "guard_trigger_rates",
+        "safety_invariant_pass_rate",
+        "latency_percentiles",
+        "total_steps",
+    }
+)
 
 
 def test_build_report_smoke() -> None:

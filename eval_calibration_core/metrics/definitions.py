@@ -11,7 +11,7 @@ from typing import Any
 class MetricDefinitions:
     """
     Mathematical definitions for metrics.
-    
+
     All metrics are computed from PacketV2 traces.
     """
 
@@ -19,14 +19,14 @@ class MetricDefinitions:
     def action_distribution(packets: list[Any]) -> dict[str, int]:
         """
         Compute action distribution.
-        
+
         Formula:
             count(action) = number of packets with final_action.action == action
             rate(action) = count(action) / total_steps
-        
+
         Args:
             packets: List of PacketV2 packets
-        
+
         Returns:
             Dict mapping action -> count
         """
@@ -39,13 +39,13 @@ class MetricDefinitions:
     def guard_trigger_rate(packets: list[Any]) -> dict[str, float]:
         """
         Compute guard trigger rate per reason code.
-        
+
         Formula:
             trigger_rate(code) = triggers(code) / total_steps
-        
+
         Args:
             packets: List of PacketV2 packets
-        
+
         Returns:
             Dict mapping reason_code -> trigger_rate
         """
@@ -68,15 +68,15 @@ class MetricDefinitions:
     def safety_invariant_pass_rate(packets: list[Any]) -> float:
         """
         Compute safety invariant pass rate.
-        
+
         Formula:
             inv_pass = passed_checks / total_checks
-        
+
         Invariant: If FinalDecision.allowed == True => mismatch is None and no deny flags
-        
+
         Args:
             packets: List of PacketV2 packets
-        
+
         Returns:
             Pass rate [0.0, 1.0]
         """
@@ -106,18 +106,18 @@ class MetricDefinitions:
     def latency_percentiles(packets: list[Any]) -> dict[str, float]:
         """
         Compute latency percentiles using nearest-rank method.
-        
+
         Formula (nearest-rank):
             p_k = value at index = floor((k/100) * n)
             For k=95, n=100: index = 95 (0-indexed: 94)
-        
+
         Method: Nearest-rank (deterministic, simple)
         - Alternative: Linear interpolation (smoother but more complex)
         - For small n, p95 and p99 may equal max value (expected behavior)
-        
+
         Args:
             packets: List of PacketV2 packets
-        
+
         Returns:
             Dict with p50, p95, p99 keys (milliseconds)
         """

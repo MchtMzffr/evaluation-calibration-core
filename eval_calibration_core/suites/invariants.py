@@ -3,8 +3,6 @@
 # SPDX-License-Identifier: MIT
 """Invariant checks."""
 
-from typing import Any
-
 from decision_schema.packet_v2 import PacketV2
 from decision_schema.types import Action
 
@@ -12,7 +10,7 @@ from decision_schema.types import Action
 def check_invariants(packets: list[PacketV2]) -> dict[str, bool]:
     """
     Check mathematical invariants on packets.
-    
+
     Returns:
         Dict mapping invariant name -> pass (True) or fail (False)
     """

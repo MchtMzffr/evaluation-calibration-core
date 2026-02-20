@@ -12,7 +12,7 @@ from eval_calibration_core.report.model import Report
 def write_report(report: Report, output_dir: Path | str) -> None:
     """
     Write report to JSON and Markdown files.
-    
+
     Args:
         report: Report instance
         output_dir: Output directory path
@@ -89,9 +89,13 @@ def _format_markdown(report: Report) -> str:
         lines.append("")
         lines.append(f"**Status**: {status}")
         lines.append(f"**Schema Version**: {check.get('schema_version', 'unknown')}")
-        lines.append(f"**Expected Range**: {check.get('expected_major', 0)}.{check.get('min_minor', 2)}.{check.get('max_minor', 2)}")
+        lines.append(
+            f"**Expected Range**: {check.get('expected_major', 0)}.{check.get('min_minor', 2)}.{check.get('max_minor', 2)}"
+        )
         lines.append("")
-        lines.append("> See `ECOSYSTEM_CONTRACT_MATRIX.md` in decision-schema repo for version compatibility details.")
+        lines.append(
+            "> See `ECOSYSTEM_CONTRACT_MATRIX.md` in decision-schema repo for version compatibility details."
+        )
         lines.append("")
 
     # Invariants

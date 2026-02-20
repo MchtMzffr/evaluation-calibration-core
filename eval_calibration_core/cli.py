@@ -6,7 +6,11 @@
 import argparse
 from pathlib import Path
 
-from eval_calibration_core.contracts import check_schema_compatibility, check_expected_minor_range, get_schema_version
+from eval_calibration_core.contracts import (
+    check_schema_compatibility,
+    check_expected_minor_range,
+    get_schema_version,
+)
 from eval_calibration_core.io.fixtures import load_fixture_suite
 from eval_calibration_core.io.packet_reader import PacketReader
 from eval_calibration_core.metrics.compute import compute_metrics
@@ -22,13 +26,24 @@ def main() -> None:
 
     # Run command
     run_parser = subparsers.add_parser("run", help="Run evaluation suite")
-    run_parser.add_argument("--suite", choices=["smoke", "determinism", "guard_pressure"], default="smoke")
-    run_parser.add_argument("--in", type=Path, help="Input JSONL file (optional, uses fixture if not provided)")
-    run_parser.add_argument("--out", type=Path, default=Path("reports/latest"), help="Output directory")
+    run_parser.add_argument(
+        "--suite", choices=["smoke", "determinism", "guard_pressure"], default="smoke"
+    )
+    run_parser.add_argument(
+        "--in",
+        type=Path,
+        dest="input_path",
+        help="Input JSONL file (optional, uses fixture if not provided)",
+    )
+    run_parser.add_argument(
+        "--out", type=Path, default=Path("reports/latest"), help="Output directory"
+    )
 
     # Report command
     report_parser = subparsers.add_parser("report", help="Generate report from existing data")
-    report_parser.add_argument("--out", type=Path, default=Path("reports/latest"), help="Output directory")
+    report_parser.add_argument(
+        "--out", type=Path, default=Path("reports/latest"), help="Output directory"
+    )
 
     args = parser.parse_args()
 
@@ -50,10 +65,11 @@ def main() -> None:
 def _run_evaluation(args: argparse.Namespace) -> None:
     """Run evaluation suite."""
     # Load packets
-    if args.in:
-        reader = PacketReader(args.in)
+    input_path = getattr(args, "input_path", None)
+    if input_path:
+        reader = PacketReader(input_path)
         packets = reader.read_all()
-        suite_name = args.in.stem
+        suite_name = input_path.stem
     else:
         packets = load_fixture_suite(args.suite)
         suite_name = args.suite
@@ -65,7 +81,9 @@ def _run_evaluation(args: argparse.Namespace) -> None:
     invariant_results = check_invariants(packets)
 
     # Check contract matrix compatibility
-    contract_ok, contract_details = check_expected_minor_range(expected_major=0, min_minor=2, max_minor=2)
+    contract_ok, contract_details = check_expected_minor_range(
+        expected_major=0, min_minor=2, max_minor=2
+    )
 
     # Create report
     report = Report(

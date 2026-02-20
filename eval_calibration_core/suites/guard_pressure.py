@@ -13,10 +13,10 @@ class GuardPressureSuite:
     def generate(seed: int = 42) -> list[PacketV2]:
         """
         Generate guard pressure test packets.
-        
+
         Args:
             seed: Random seed
-        
+
         Returns:
             List of PacketV2 packets
         """

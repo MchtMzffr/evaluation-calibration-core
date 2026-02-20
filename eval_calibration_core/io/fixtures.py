@@ -3,21 +3,19 @@
 # SPDX-License-Identifier: MIT
 """Synthetic fixture suites for testing."""
 
-from typing import Any
-
 from decision_schema.packet_v2 import PacketV2
 
 
 def load_fixture_suite(name: str) -> list[PacketV2]:
     """
     Load a synthetic fixture suite.
-    
+
     Args:
         name: Suite name (e.g., "smoke", "determinism", "guard_pressure")
-    
+
     Returns:
         List of PacketV2 packets
-    
+
     Raises:
         ValueError: If suite name is unknown
     """
