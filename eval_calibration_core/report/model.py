@@ -22,6 +22,7 @@ class Report:
     calibration_summary: dict[str, Any] | None = None
     contract_matrix_check: dict[str, Any] | None = None
     contract_ok: bool | None = None  # INV-EVAL-CTR-1: single source for contract check result
+    explanation: dict[str, Any] | None = None  # Optional; set by harness when explainability-audit-core is used
 
     def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary."""
@@ -40,4 +41,6 @@ class Report:
             result["contract_matrix_check"] = self.contract_matrix_check
         if self.contract_ok is not None:
             result["contract_ok"] = self.contract_ok
+        if self.explanation is not None:
+            result["explanation"] = self.explanation
         return result

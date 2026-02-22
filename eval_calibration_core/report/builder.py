@@ -3,6 +3,10 @@
 # SPDX-License-Identifier: MIT
 """Build Report from PacketV2 list (metrics + invariants + contract check)."""
 
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from decision_schema import __version__ as schema_version
 
 from eval_calibration_core.contracts import check_expected_minor_range
@@ -10,9 +14,12 @@ from eval_calibration_core.metrics.compute import compute_metrics
 from eval_calibration_core.report.model import Report
 from eval_calibration_core.suites.invariants import check_invariants
 
+if TYPE_CHECKING:
+    from decision_schema.packet_v2 import PacketV2
+
 
 def build_report(
-    packets: list,
+    packets: list["PacketV2"],
     suite_name: str = "default",
     expected_schema_minor: int = 2,
 ) -> Report:
