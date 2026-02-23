@@ -22,7 +22,9 @@ class Report:
     calibration_summary: dict[str, Any] | None = None
     contract_matrix_check: dict[str, Any] | None = None
     contract_ok: bool | None = None  # INV-EVAL-CTR-1: single source for contract check result
-    explanation: dict[str, Any] | None = None  # Optional; set by harness when explainability-audit-core is used
+    explanation: dict[str, Any] | None = (
+        None  # Optional; set by harness when explainability-audit-core is used
+    )
 
     def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary."""
